@@ -45,7 +45,7 @@ class EZTransformer:
         if self.load_model:
             self.load_model_from_file(self.load_model)
 
-    def fit(self, train_data, valid_data=None, max_epochs=100, print_validation_examples=0, return_history=False):
+    def fit(self, train_data, valid_data=None, max_epochs=100, print_validation_examples=0, return_history=False, use_tqdm=True):
         # Build vocabulary from train_data if not already built
         if self.token2idx is None:
             self.build_vocab(train_data)
@@ -72,7 +72,7 @@ class EZTransformer:
             # Training
             self.model.train()
             epoch_loss = 0
-            for src_batch, trg_batch in tqdm(train_loader, desc=f"Epoch {epoch+1}/{max_epochs}"):
+            for src_batch, trg_batch in tqdm(train_loader, desc=f"Epoch {epoch+1}/{max_epochs}", disable=use_tqdm):
                 src_batch = src_batch.to(self.device)
                 trg_batch = trg_batch.to(self.device)
 
