@@ -72,7 +72,7 @@ class EZTransformer:
             # Training
             self.model.train()
             epoch_loss = 0
-            for src_batch, trg_batch in tqdm(train_loader, desc=f"Epoch {epoch+1}/{max_epochs}", disable=!verbose):
+            for src_batch, trg_batch in tqdm(train_loader, desc=f"Epoch {epoch+1}/{max_epochs}", disable=not verbose):
                 src_batch = src_batch.to(self.device)
                 trg_batch = trg_batch.to(self.device)
 
