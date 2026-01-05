@@ -104,7 +104,7 @@ class EZTransformer:
                 # Save the best model
                 if self.save_best and valid_loss < self.best_valid_loss:
                     self.best_valid_loss = valid_loss
-                    self.write_model('best_model.pt')
+                    self.write_model('best_model.pt', verbose=verbose)
 
             # Print validation examples
             if print_validation_examples > 0 and valid_data:
@@ -250,7 +250,7 @@ class EZTransformer:
         return accuracy, avg_distance
     
 
-    def write_model(self, filename='eztransformer_model.pt'):
+    def write_model(self, filename='eztransformer_model.pt', verbose=True):
         state = {
             'model_state_dict': self.model.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict(),
@@ -263,7 +263,8 @@ class EZTransformer:
             'best_valid_loss': self.best_valid_loss,
         }
         torch.save(state, filename)
-        print(f"Model saved to {filename}")
+        if verbose:
+            print(f"Model saved to {filename}")
 
     def load_model_from_file(self, filename):
         state = torch.load(filename, map_location=self.device)
